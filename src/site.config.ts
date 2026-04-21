@@ -49,8 +49,6 @@ export const theme: ThemeUserConfig = {
   header: {
     menu: [
       { title: '文章', link: '/blog' },
-      { title: '標籤', link: '/tags' },
-      { title: '歸檔', link: '/archives' },
       { title: '作品', link: '/projects' },
       { title: '關於', link: '/about' }
     ]
@@ -58,23 +56,19 @@ export const theme: ThemeUserConfig = {
 
   /** Configure the footer of your site. */
   footer: {
+    links: [
+      {
+        title: '고민중독',
+        link: 'https://www.youtube.com/watch?v=ImuWa3SJulY',
+        style: 'text-xs', // Uno/TW CSS class
+        pos: 2
+      }
+    ],
     // Year format
     year: `© ${new Date().getFullYear()}`,
     // year: `© 2019 - ${new Date().getFullYear()}`,
-    links: [
-      {
-        title: '友站連結',
-        link: '/links',
-        style: 'text-sm' // Uno/TW CSS class
-      },
-      {
-        title: '網站政策',
-        link: '/terms',
-        pos: 2 // position set to 2 will be appended to copyright line
-      }
-    ],
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
-    credits: true,
+    credits: false,
     /** Optional details about the social media accounts for this site. */
     social: { github: 'https://github.com/kashionz' }
   },
@@ -127,13 +121,6 @@ export const integ: IntegrationUserConfig = {
   quote: {
     // - Hitokoto
     // https://developer.hitokoto.cn/sentence/#%E8%AF%B7%E6%B1%82%E5%9C%B0%E5%9D%80
-    // server: 'https://v1.hitokoto.cn/?c=i',
-    // target: `(data) => (data.hitokoto || 'Error')`
-    // - Quotable
-    // https://github.com/lukePeavey/quotable
-    // server: 'http://api.quotable.io/quotes/random?maxLength=60',
-    // target: `(data) => data[0].content || 'Error'`
-    // - Hitokoto
     server: 'https://v1.hitokoto.cn/?c=i',
     target: `(data) => (data.hitokoto || 'Error')`
   },

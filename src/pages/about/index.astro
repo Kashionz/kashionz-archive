@@ -3,39 +3,251 @@ import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import Substats from '@/components/about/Substats.astro'
 import ToolSection from '@/components/about/ToolSection.astro'
+import { homeSkillGroups } from '../../data/skills'
 
 const headings = [
-  { depth: 2, slug: 'hobbies', text: 'Hobbies' },
+  { depth: 2, slug: 'skills', text: 'Skills' },
   { depth: 2, slug: 'tools', text: 'Tools' },
   { depth: 2, slug: 'social-networks', text: 'Social Networks' },
   { depth: 2, slug: 'gossips', text: 'Gossips' },
   { depth: 2, slug: 'about-blog', text: 'About Blog' }
 ]
+
+const skillIcons = {
+  key: import('@/assets/icons/key.svg?raw'),
+  git: import('@/assets/tools/git.svg?raw'),
+  aws: import('@/assets/tools/aws.svg?raw'),
+  docker: import('@/assets/tools/docker.svg?raw'),
+  vercel: import('@/assets/tools/vercel.svg?raw'),
+  githubactions: import('@/assets/tools/githubactions.svg?raw'),
+  ssh: import('@/assets/tools/ssh.svg?raw'),
+  claude: import('@/assets/tools/claude.svg?raw'),
+  codex: import('@/assets/tools/codex.svg?raw'),
+  openai: import('@/assets/tools/openai.svg?raw'),
+  gemini: import('@/assets/tools/gemini.svg?raw'),
+  csharp: import('@/assets/tools/csharp.svg?raw'),
+  python: import('@/assets/tools/python.svg?raw'),
+  postgresql: import('@/assets/tools/postgresql.svg?raw'),
+  mysql: import('@/assets/tools/mysql.svg?raw'),
+  cursor: import('@/assets/tools/cursor.svg?raw'),
+  antigravity: import('@/assets/tools/antigravity.svg?raw'),
+  canva: import('@/assets/tools/canva.svg?raw'),
+  markdown: import('@/assets/tools/markdown.svg?raw'),
+  linux: import('@/assets/tools/linux.svg?raw'),
+  windows11: import('@/assets/tools/windows11.svg?raw'),
+  ubuntu: import('@/assets/tools/ubuntu.svg?raw'),
+  apple: import('@/assets/tools/apple.svg?raw'),
+  vscode: import('@/assets/tools/vscode.svg?raw'),
+  photoshop: import('@/assets/tools/photoshop.svg?raw'),
+}
+
+type SkillMeta = {
+  displayName?: string
+  description: string
+  href: string
+  icon: keyof typeof skillIcons
+}
+
+type ToolItem = {
+  name: string
+  description: string
+  href: string
+  icon: Promise<typeof import('*.svg?raw')>
+}
+
+const skillMeta: Partial<Record<string, SkillMeta>> = {
+  Windows: {
+    displayName: 'Windows 11',
+    description: 'PC',
+    href: 'https://www.microsoft.com/windows',
+    icon: 'windows11'
+  },
+  Linux: {
+    description: 'Linux Kernel',
+    href: 'https://www.kernel.org/',
+    icon: 'linux'
+  },
+  macOS: {
+    displayName: 'macOS Sequoia',
+    description: 'Mac mini M4',
+    href: 'https://www.apple.com/macos/',
+    icon: 'apple'
+  },
+  Git: {
+    description: 'Version Control',
+    href: 'https://git-scm.com/',
+    icon: 'git'
+  },
+  AWS: {
+    description: 'Cloud Platform',
+    href: 'https://aws.amazon.com/',
+    icon: 'aws'
+  },
+  Docker: {
+    description: 'Containerization',
+    href: 'https://www.docker.com/',
+    icon: 'docker'
+  },
+  Vercel: {
+    description: 'Deployment Platform',
+    href: 'https://vercel.com/',
+    icon: 'vercel'
+  },
+  'GitHub Actions': {
+    description: 'CI/CD',
+    href: 'https://github.com/features/actions',
+    icon: 'githubactions'
+  },
+  SSH: {
+    description: 'Secure Remote Access',
+    href: 'https://www.openssh.com/',
+    icon: 'ssh'
+  },
+  Claude: {
+    description: 'AI Assistant',
+    href: 'https://claude.ai/',
+    icon: 'claude'
+  },
+  Codex: {
+    description: 'AI Assistant',
+    href: 'https://openai.com/codex/',
+    icon: 'codex'
+  },
+  Gemini: {
+    description: 'AI Assistant',
+    href: 'https://gemini.google.com/',
+    icon: 'gemini'
+  },
+  'C#': {
+    description: 'Programming Language',
+    href: 'https://learn.microsoft.com/dotnet/csharp/',
+    icon: 'csharp'
+  },
+  Python: {
+    description: 'Programming Language',
+    href: 'https://www.python.org/',
+    icon: 'python'
+  },
+  PostgreSQL: {
+    description: 'Database',
+    href: 'https://www.postgresql.org/',
+    icon: 'postgresql'
+  },
+  MySQL: {
+    description: 'Database',
+    href: 'https://www.mysql.com/',
+    icon: 'mysql'
+  },
+  'VS Code': {
+    description: 'IDE',
+    href: 'https://code.visualstudio.com/',
+    icon: 'vscode'
+  },
+  Cursor: {
+    description: 'IDE',
+    href: 'https://www.cursor.com/',
+    icon: 'cursor'
+  },
+  Antigravity: {
+    description: 'IDE',
+    href: 'https://antigravity.dev/',
+    icon: 'antigravity'
+  },
+  Photoshop: {
+    description: 'Design Tool',
+    href: 'https://www.adobe.com/products/photoshop',
+    icon: 'photoshop'
+  },
+  Canva: {
+    description: 'Design Tool',
+    href: 'https://www.canva.com/',
+    icon: 'canva'
+  },
+  Markdown: {
+    description: 'Markup Language',
+    href: 'https://www.markdownguide.org/',
+    icon: 'markdown'
+  }
+}
+
+const defaultSkillMeta: SkillMeta = {
+  description: 'Skill',
+  href: '#',
+  icon: 'key'
+}
+
+function skillToTool(skill: string): ToolItem {
+  const meta = skillMeta[skill] ?? defaultSkillMeta
+  return {
+    name: meta.displayName ?? skill,
+    description: meta.description,
+    href: meta.href,
+    icon: skillIcons[meta.icon]
+  }
+}
+
+function uniqueByName<T extends { name: string }>(items: T[]): T[] {
+  const seen = new Set<string>()
+  return items.filter((item) => {
+    if (seen.has(item.name))
+      return false
+    seen.add(item.name)
+    return true
+  })
+}
+
+const movedSkillGroupTitles = new Set(['IDE', 'AI Assistants', 'Operating Systems', 'Design'])
+const skillGroupsMap: Record<string, string[]> = Object.fromEntries(
+  homeSkillGroups.map((group) => [group.title, group.skills])
+)
+
+const aboutSkillSections = homeSkillGroups.map((group) => ({
+  title: group.title,
+  tools: group.skills.map((skill) => skillToTool(skill))
+}))
+
+const filteredAboutSkillSections = aboutSkillSections.filter(
+  (group) => !movedSkillGroupTitles.has(group.title)
+)
+
+const movedDesignTools = uniqueByName(
+  (skillGroupsMap.Design ?? []).map((skill) => skillToTool(skill)).filter((tool) => tool.name !== 'Photoshop')
+)
+
+const developmentTools = uniqueByName([
+  ...(skillGroupsMap.IDE ?? []).map((skill) => skillToTool(skill)),
+  ...(skillGroupsMap['AI Assistants'] ?? []).map((skill) => skillToTool(skill))
+])
+
+const environmentTools = uniqueByName([
+  ...(skillGroupsMap['Operating Systems'] ?? []).map((skill) => skillToTool(skill)),
+  {
+    name: 'Ubuntu 24.04.1 LTS',
+    description: 'WSL 2',
+    href: 'https://ubuntu.com/',
+    icon: import('@/assets/tools/ubuntu.svg?raw')
+  }
+])
 ---
 
 <PageLayout title='About' {headings} comment>
-  <p>Backend Developer</p>
+  <p>Backend Developer / 斜槓一點企劃、設計、行銷、剪輯</p>
   <p>
-    Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione indoctum
-    dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel, at eum oratio
-    possit voluptatum.
+    <b>要我一直夸嗎？</b>
   </p>
   <p>
-    Motto: Stay hungry, Stay foolish. <Spoiler>这里可以夹私货，比如为什么要演奏春日影！</Spoiler>
+    The unexamined life is not worth living. <Spoiler>為什麼要演奏春日影！</Spoiler>
   </p>
   <Button title='Sponsor Me' class='w-fit' href='/projects#sponsorship' variant='ahead' />
 
-  {/* general-talk */}
-  <h2 id='hobbies'>Hobbies</h2>
-  <ul>
-    <li>Lorem ipsum dolor sit amet, vidit suscipit at mei.</li>
-    <li>
-      Quem denique mea id. Usu ei regione indoctum dissentiunt, cu meliore fuisset mei, vel quod
-      voluptua ne.
-    </li>
-    <li>Ex dicat impedit mel, at eum oratio possit voluptatum.</li>
-    <li>Impetus fuisset ullamcorper pri cu, his posse iisque ad, aliquam honestatis usu id.</li>
-  </ul>
+  {/* skills */}
+  <h2 id='skills'>Skills</h2>
+  <p>Skills from homepage:</p>
+  {
+    filteredAboutSkillSections.map((group) => (
+      <ToolSection class='mb-5' title={group.title} tools={group.tools} />
+    ))
+  }
 
   {/* tools */}
   <h2 id='tools'>Tools</h2>
@@ -50,24 +262,7 @@ const headings = [
         href: 'https://www.adobe.com/products/photoshop',
         icon: import('@/assets/tools/photoshop.svg?raw')
       },
-      {
-        name: 'Illustrator',
-        description: 'Vector Drawing',
-        href: 'https://www.adobe.com/products/illustrator',
-        icon: import('@/assets/tools/illustrator.svg?raw')
-      },
-      {
-        name: 'After Effects',
-        description: 'Motion Graphics',
-        href: 'https://www.adobe.com/products/aftereffects',
-        icon: import('@/assets/tools/aftereffects.svg?raw')
-      },
-      {
-        name: 'Premiere Pro',
-        description: 'Video Editing',
-        href: 'https://www.adobe.com/products/premiere',
-        icon: import('@/assets/tools/premiere.svg?raw')
-      }
+      ...movedDesignTools
     ]}
   />
   <ToolSection
@@ -81,78 +276,28 @@ const headings = [
         icon: import('@/assets/tools/chrome.svg?raw')
       },
       {
-        name: 'Firefox',
+        name: 'Brave',
         description: 'Browser',
-        href: 'https://www.mozilla.org/en-US/firefox',
-        icon: import('@/assets/tools/firefox.svg?raw')
+        href: 'https://brave.com/',
+        icon: import('@/assets/tools/brave.svg?raw')
       },
       {
-        name: 'Notion',
-        description: 'Note Taking',
-        href: 'https://www.notion.so/',
-        icon: import('@/assets/tools/notion.svg?raw')
-      },
-      {
-        name: 'Typora',
-        description: 'Markdown Editor',
-        href: 'https://typora.io/',
-        icon: import('@/assets/tools/typora.svg?raw')
+        name: 'Safari',
+        description: 'Browser',
+        href: 'https://www.apple.com/safari/',
+        icon: import('@/assets/tools/safari.svg?raw')
       }
     ]}
   />
   <ToolSection
     class='mb-5'
     title='Development'
-    tools={[
-      {
-        name: 'VS Code',
-        description: 'IDE',
-        href: 'https://code.visualstudio.com/',
-        icon: import('@/assets/tools/vscode.svg?raw')
-      },
-      {
-        name: 'Neovim',
-        description: 'IDE',
-        href: 'https://neovim.io/',
-        icon: import('@/assets/tools/neovim.svg?raw')
-      },
-      {
-        name: 'Sublime Text',
-        description: 'IDE',
-        href: 'https://www.sublimetext.com/',
-        icon: import('@/assets/tools/sublime.svg?raw')
-      }
-    ]}
+    tools={developmentTools}
   />
   <ToolSection
     class='mb-5'
     title='Environment'
-    tools={[
-      {
-        name: 'Arch Linux',
-        description: 'Linux Distribution',
-        href: 'https://archlinux.org/',
-        icon: import('@/assets/tools/archlinux.svg?raw')
-      },
-      {
-        name: 'Ubuntu 24.04 LTS',
-        description: 'Linux Distribution',
-        href: 'https://ubuntu.com/',
-        icon: import('@/assets/tools/ubuntu.svg?raw')
-      },
-      {
-        name: 'MacOS Tahoe',
-        description: 'MacBook Air',
-        href: 'https://www.apple.com/macos/',
-        icon: import('@/assets/tools/apple.svg?raw')
-      },
-      {
-        name: 'Windows 11',
-        description: 'Framework Laptop 16',
-        href: 'https://news.microsoft.com/windows11-general-availability/',
-        icon: import('@/assets/tools/windows11.svg?raw')
-      }
-    ]}
+    tools={environmentTools}
   />
 
   {/* social-networks */}
