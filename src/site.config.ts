@@ -3,21 +3,21 @@ import type { CardListData, Config, IntegrationUserConfig, ThemeUserConfig } fro
 export const theme: ThemeUserConfig = {
   // [Basic]
   /** Title for your website. Will be used in metadata and as browser tab title. */
-  title: 'Astro Theme Pure',
+  title: 'Kashionz\'s Archive',
   /** Will be used in index page & copyright declaration */
-  author: 'Pure Lab',
+  author: 'Kashionz',
   /** Description metadata for your website. Can be used in page metadata. */
-  description: 'Stay hungry, stay foolish',
+  description: '記錄技術、創作與生活的個人網誌。',
   /** The default favicon for your site which should be a path to an image in the `public/` directory. */
   favicon: '/favicon/favicon.ico',
   /** The default social card image for your site which should be a path to an image in the `public/` directory. */
   socialCard: '/images/social-card.png',
   /** Specify the default language for this site. */
   locale: {
-    lang: 'en-US',
-    attrs: 'en_US',
+    lang: 'zh-TW',
+    attrs: 'zh_TW',
     // Date locale
-    dateLocale: 'en-US',
+    dateLocale: 'zh-TW',
     dateOptions: {
       day: 'numeric',
       month: 'short',
@@ -27,7 +27,7 @@ export const theme: ThemeUserConfig = {
   /** Set a logo image to show in the homepage. */
   logo: {
     src: '/src/assets/avatar.png',
-    alt: 'Avatar'
+    alt: 'Kashionz Avatar'
   },
 
   titleDelimiter: '•',
@@ -48,11 +48,11 @@ export const theme: ThemeUserConfig = {
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: 'Blog', link: '/blog' },
-      { title: 'Docs', link: '/docs' },
-      { title: 'Projects', link: '/projects' },
-      { title: 'Links', link: '/links' },
-      { title: 'About', link: '/about' }
+      { title: '文章', link: '/blog' },
+      { title: '標籤', link: '/tags' },
+      { title: '歸檔', link: '/archives' },
+      { title: '作品', link: '/projects' },
+      { title: '關於', link: '/about' }
     ]
   },
 
@@ -62,15 +62,13 @@ export const theme: ThemeUserConfig = {
     year: `© ${new Date().getFullYear()}`,
     // year: `© 2019 - ${new Date().getFullYear()}`,
     links: [
-      // Registration link
       {
-        title: 'Moe ICP 114514',
-        link: 'https://icp.gov.moe/?keyword=114514',
+        title: '友站連結',
+        link: '/links',
         style: 'text-sm' // Uno/TW CSS class
       },
-      // Privacy Policy link
       {
-        title: 'Site Policy',
+        title: '網站政策',
         link: '/terms',
         pos: 2 // position set to 2 will be appended to copyright line
       }
@@ -78,7 +76,7 @@ export const theme: ThemeUserConfig = {
     /** Enable displaying a “Astro & Pure theme powered” link in your site’s footer. */
     credits: true,
     /** Optional details about the social media accounts for this site. */
-    social: { github: 'https://github.com/cworld1/astro-theme-pure' }
+    social: { github: 'https://github.com/kashionz' }
   },
 
   // [Content]
@@ -93,7 +91,7 @@ export const theme: ThemeUserConfig = {
     blogPageSize: 8,
     /** Share buttons to show */
     // Currently support weibo, x, bluesky
-    share: ['weibo', 'x', 'bluesky']
+    share: ['x', 'bluesky']
     /** Enable image captions (default false) */
     // imageCaption: true
   }
@@ -115,8 +113,8 @@ export const integ: IntegrationUserConfig = {
     applyTip: [
       { name: 'Name', val: theme.title },
       { name: 'Desc', val: theme.description || 'Null' },
-      { name: 'Link', val: 'https://astro-pure.js.org/' },
-      { name: 'Avatar', val: 'https://astro-pure.js.org/favicon/favicon.ico' }
+      { name: 'Link', val: 'https://kashionz.blog' },
+      { name: 'Avatar', val: '/src/assets/avatar.png' }
     ],
     // Cache avatars in `public/avatars/` to improve user experience.
     cacheAvatar: false
@@ -135,9 +133,9 @@ export const integ: IntegrationUserConfig = {
     // https://github.com/lukePeavey/quotable
     // server: 'http://api.quotable.io/quotes/random?maxLength=60',
     // target: `(data) => data[0].content || 'Error'`
-    // - DummyJSON
-    server: 'https://dummyjson.com/quotes/random',
-    target: `(data) => (data.quote.length > 80 ? \`\${data.quote.slice(0, 80)}...\` : data.quote || 'Error')`
+    // - Hitokoto
+    server: 'https://v1.hitokoto.cn/?c=i',
+    target: `(data) => (data.hitokoto || 'Error')`
   },
   // [Typography]
   // https://unocss.dev/presets/typography
@@ -160,7 +158,8 @@ export const integ: IntegrationUserConfig = {
   },
   // Comment system
   waline: {
-    enable: true,
+    // 建議先關閉，等你有自己的 Waline 服務後再開啟
+    enable: false,
     // Server service link
     server: 'https://astro-theme-pure-waline.arthals.ink/',
     // Show meta info for comments
@@ -173,8 +172,8 @@ export const integ: IntegrationUserConfig = {
       pageview: true,
       comment: true,
       locale: {
-        reaction0: 'Like',
-        placeholder: 'Welcome to comment. (Email to receive replies. Login is unnecessary)'
+        reaction0: '讚',
+        placeholder: '歡迎留言交流（填 Email 可收到回覆通知，不需註冊）'
       },
       imageUploader: false
     }
