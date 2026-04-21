@@ -3,7 +3,7 @@ import { Image } from 'astro:assets'
 import { type CollectionEntry, type CollectionKey, render } from 'astro:content'
 
 import { cn } from '../../utils'
-import { Button, FormattedDate, Icon } from '../user'
+import { FormattedDate, Icon } from '../user'
 
 type Props<T extends CollectionKey> = {
   post: CollectionEntry<T>
@@ -103,17 +103,6 @@ const postDate = data.updatedDate ?? data.publishDate
                 </span>
               )}
             </div>
-            {data.tags.length > 0 && (
-              <object title='Tags' aria-label='Tags' aria-labelledby='Tags'>
-                <ul class='tag-list mt-1 flex gap-2'>
-                  {data.tags.map((tag: string) => (
-                    <li>
-                      <Button as='a' title={tag} href={`/tags/${tag}`} variant='pill' />
-                    </li>
-                  ))}
-                </ul>
-              </object>
-            )}
           </>
         )
       }
@@ -126,12 +115,10 @@ const postDate = data.updatedDate ?? data.publishDate
       );
     }
     .post-preview:hover {
-      & > a,
-      & .tag-list a {
+      & > a {
         background-color: var( --preview-highlight-bg, hsl(var(--muted) / var(--un-bg-opacity, 1))) !important;
       }
-      & > a,
-      & .tag-list a:hover {
+      & > a {
         color: var(--preview-highlight-final) !important;
       }
       & > a .preview-redirect {

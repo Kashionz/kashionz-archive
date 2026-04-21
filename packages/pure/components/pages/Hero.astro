@@ -10,7 +10,7 @@ interface Props {
 }
 
 const {
-  data: { title, description, draft, heroImage, publishDate, updatedDate, tags, language },
+  data: { title, description, draft, heroImage, publishDate, updatedDate, language },
   remarkPluginFrontmatter
 } = Astro.props
 
@@ -76,27 +76,6 @@ const dateTimeOptions: Intl.DateTimeFormatOptions = {
         <span class='flex items-center gap-1'>
           <Icon name='earth' class='size-5' />
           {language}
-        </span>
-      )
-    }
-    {
-      // Tags
-      !!tags?.length && (
-        <span class='flex items-center gap-1'>
-          <Icon name='hashtag' class='size-5' />
-          {tags.map((tag: string, i: number) => (
-            <div>
-              <a
-                aria-label={`View more blogs with the tag ${tag}`}
-                class='hover:underline hover:underline-offset-4'
-                data-pagefind-filter='tag'
-                href={`/tags/${tag}`}
-              >
-                {tag}
-              </a>
-              {i < tags.length - 1 && '/'}
-            </div>
-          ))}
         </span>
       )
     }

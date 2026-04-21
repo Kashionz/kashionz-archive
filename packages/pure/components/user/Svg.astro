@@ -30,12 +30,32 @@ if ('alt' in attributeOverrides) {
   throw new Error(ALT_NOT_ALLOWED)
 }
 
-if (!svgSource.trimStart().toLowerCase().startsWith('<svg')) {
+function stripSvgPreamble(source: string): string {
+  let output = source.trimStart()
+
+  // Some SVG files include XML declarations, doctypes, or comments before <svg>.
+  // Accept those by stripping them from the leading preamble.
+  while (true) {
+    const next = output
+      .replace(/^<\?xml[\s\S]*?\?>\s*/i, '')
+      .replace(/^<!doctype[\s\S]*?>\s*/i, '')
+      .replace(/^<!--[\s\S]*?-->\s*/i, '')
+
+    if (next === output) break
+    output = next
+  }
+
+  return output
+}
+
+const normalizedSvgSource = stripSvgPreamble(svgSource)
+
+if (!normalizedSvgSource.toLowerCase().startsWith('<svg')) {
   throw new Error(`${SVG_NOT_FOUND}, provided: ${svgSource.slice(0, 23)}
   maybe you need to add '?raw' to the end of the import?`)
 }
 
-const contents = overrideSvgAttributes(svgSource, attributeOverrides)
+const contents = overrideSvgAttributes(normalizedSvgSource, attributeOverrides)
 ---
 
 <Fragment set:html={contents} />
