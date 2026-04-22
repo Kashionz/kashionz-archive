@@ -32,8 +32,11 @@ const {
   title,
   updatedDate,
   draft: isDraft,
-  comment: enableComment
+  comment
 } = data
+
+const walineEnabled = config.integ.waline.enable
+const enableComment = Boolean(comment) && walineEnabled
 
 const socialImage = heroImage
   ? typeof heroImage.src === 'string'
