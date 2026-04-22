@@ -1,14 +1,10 @@
 ---
 import { Image } from 'astro:assets'
 
-import { Button, Collapse, Icon } from 'astro-pure/user'
+import { Button, Collapse } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import ProjectSection from '@/components/projects/ProjectSection.astro'
-import Sponsors from '@/components/projects/Sponsors.astro'
-import Sponsorship from '@/components/projects/Sponsorship.astro'
-import alipay from '@/assets/alipay-qrcode.jpg'
 import KeyIcon from '@/assets/icons/key.svg'
-import wechat from '@/assets/wechat-qrcode.jpg'
 
 const headings = [
   { depth: 2, slug: 'programs', text: 'Programs' },
@@ -20,7 +16,13 @@ const headings = [
 ---
 
 <PageLayout title='Projects' {headings} view>
-  {/* About astro-pure */}
+  <p>
+    這裡放一些專案，你覺得對有用的話可以在 GitHub 幫我按個星星，也可以買杯咖啡給我。
+  </p>
+  {/*
+  <p>
+    網頁模板使用 Astro Theme Pure，歡迎點擊下方按鈕了解更多關於這個模板的資訊。
+  </p>
   <div class='not-prose flex justify-center'>
     <a
       href='/docs/advanced/about' target='_blank'
@@ -30,6 +32,7 @@ const headings = [
       <p class='font-medium text-muted-foreground'>About Astro-Theme-Pure Project</p>
     </a>
   </div>
+  {/*
   <p>Github Activities:</p>
   <p>
     <Image
@@ -40,37 +43,39 @@ const headings = [
     />
   </p>
   <p>
-    If you think it would be useful or interesting to collaborate on a project, you can donate to
-    support my work or contact me to discuss a project.
+    If you think it would be useful or interesting to collaborate on a project, feel free to
+    contact me to discuss it.
   </p>
-  <Button title='Checkout sponsorship' class='w-fit' href='#sponsorship'>
-    <Icon class='size-5' name='receive-money' slot='before' />
-  </Button>
-
+  <Button title='Support Me on Ko-fi' class='w-fit' href='#sponsorship' />
+  */}
   <h2 id='programs'>Programs</h2>
   <ProjectSection
     projects={[
       {
-        name: '🎨 Astro Theme Pure',
-        description: 'A simple, fast and powerful blog & document theme built by Astro',
+        name: 'AirPodsDesktop (Contributors)',
+        description: 'AirPods desktop user experience enhancement program, for Windows and Linux (WIP)',
         links: [
-          { type: 'github', href: 'https://github.com/cworld1/astro-theme-pure' },
-          { type: 'site', href: 'https://astro-pure.js.org/' },
-          { type: 'doc', href: 'https://astro-pure.js.org/docs/list' },
-          { type: 'release', href: 'https://www.npmjs.com/package/astro-pure' }
-        ]
-      },
-      {
-        name: '💄 PKU Art',
-        description: 'A script to beautify pku course website',
-        links: [
-          { type: 'github', href: 'https://github.com/zhuozhiyongde/pku-art' },
-          { type: 'site', href: 'https://github.com/zhuozhiyongde/pku-art' },
-          { type: 'doc', href: 'https://docs.arthals.ink/docs/pku-art' }
+          { type: 'github', href: 'https://github.com/SpriteOvO/AirPodsDesktop' },
+          { type: 'release', href: 'https://github.com/SpriteOvO/AirPodsDesktop/releases/tag/0.4.2' },
         ]
       }
     ]}
   />
+
+    <h2 id='scripts'>Scripts</h2>
+  <ProjectSection
+    projects={[
+      {
+        name: 'youtube-comment-blocker',
+        description: '可以封鎖特定Youtube使用者的留言',
+        links: [
+          { type: 'github', href: 'https://github.com/Kashionz/youtube-comment-blocker' },
+        ]
+      }
+    ]}
+  />
+
+  {/*
   <Collapse title='Some old projects'>
     <ProjectSection
       projects={[
@@ -94,7 +99,7 @@ const headings = [
       ]}
     />
   </Collapse>
-
+  
   <h2 id='learnings'>Learnings</h2>
   <ProjectSection
     class='my-2'
@@ -145,62 +150,40 @@ const headings = [
     <KeyIcon class='size-5' slot='before' />
   </Button>
 
-  <h2 id='sponsorship'>Sponsorship</h2>
-  <p>Chinese methods: <a href="https://afdian.com/a/cworld" target="_blank">Afadian</a>, Wechat or Alipay </p>
-  <Sponsorship
-    methods={[
-      { name: 'WeChat', icon: 'wechat-pay', image: wechat },
-      { name: 'Alipay', icon: 'alipay', image: alipay }
-    ]}
-  />
-  <p>Global methods: <a href="https://ko-fi.com/cworld0" target="_blank">Ko-fi</a> </p>
-  <p>Please leave a message or contact me proactively after sponsorship. My email is:
-    <code style='cursor: pointer'
-      onclick='const m=atob(this.textContent);alert(m);window.open(`mailto:${m}`,"_blank")'
-    >Y3dvcmxkMEBxcS5jb20=</code>
-    (click code to transform base64).
+  */}
+
+  <h2 id='donate '>Donate</h2>
+  <p>
+    如果有斗內的話可以聯絡我，我會把你的名字放在下面，謝謝乾爹。
   </p>
-  <p>Thanks to the following sponsors:</p>
-  <Sponsors
-    progressMax={50}
-    sponsors={[
-      { name: 'Saneko', platform: 'Wechat', amount: 188, date: '2026-02-25' },
-      { name: '边缘星2020', platform: 'Afdian', amount: 20.26, date: '2026-02-17' },
-      { name: 'Juyao Huang', platform: 'Wechat', amount: 5, date: '2026-01-15' },
-      { name: 'hoochanlon', platform: 'Wechat', amount: 5, date: '2025-11-09' },
-      { name: 'Arthals', platform: 'Wechat', amount: 50, date: '2025-11-06' },
-      { name: '边缘星2020 (byx2020.com)', platform: 'Alipay', amount: 50, date: '2025-11-01' },
-      { name: '小哲', platform: 'Wechat', amount: 50, date: '2025-08-19' },
-      { name: 'Open1V', platform: 'Wechat', amount: 2, date: '2025-08-14' },
-      { name: 'Luis Xu', platform: 'Alipay', amount: 30, date: '2025-08-03' },
-      { name: '顾**', platform: 'Wechat', amount: 28, date: '2025-06-23' },
-      { name: 'Hans J.Han', platform: 'Wechat', amount: 10, date: '2025-04-04' },
-      { name: '**青', platform: 'Alipay', amount: 12, date: '2024-05-21' },
-      { name: 'Anonymous', platform: 'Wechat', amount: 20, date: '2022-04-06' },
-      { name: '华雄', platform: 'QQ', amount: 5, date: '2019-12-30' },
-      { name: '◌', platform: 'QQ', amount: 3, date: '2019-12-30' },
-      // 酷安@暴走の蜗牛
-      { name: 'C*a', amount: 2, date: '2019-07-02' }
-    ]}
-  />
+  <div class='not-prose kofi-frame-wrap'>
+    <iframe
+      id='kofiframe'
+      src='https://ko-fi.com/kashionz/?hidefeed=true&widget=true&embed=true'
+      style='border:0;outline:none;box-shadow:none;width:100%;padding:0;background:transparent;'
+      height='625'
+      title='kashionz'
+    />
+  </div>
 </PageLayout>
 
 <style>
-  .sponsorship-card {
-    & .sponsorship-card-img {
-      opacity: 0.3;
-      --un-blur: blur(4px);
-      filter: var(--un-blur);
-    }
+  .kofi-frame-wrap {
+    max-width: 402px;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 0 !important;
+    background: transparent !important;
+    line-height: 0;
+  }
 
-    &:hover {
-      & .sponsorship-card-icon {
-        opacity: 0;
-      }
-      & .sponsorship-card-img {
-        opacity: 1;
-        --un-blur: blur(0);
-      }
-    }
+  #kofiframe {
+    display: block;
+    width: calc(100% + 12px);
+    margin: 0 -6px;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
   }
 </style>
