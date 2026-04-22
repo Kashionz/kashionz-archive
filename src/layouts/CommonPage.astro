@@ -3,6 +3,7 @@ import type { MarkdownHeading } from 'astro'
 
 import { TOC } from 'astro-pure/components/pages'
 import PageLayout from '@/layouts/ContentLayout.astro'
+import config from '@/site-config'
 import { Comment, PageInfo } from '@/components/waline'
 
 interface Props {
@@ -12,7 +13,11 @@ interface Props {
   comment?: boolean
 }
 
-const { title, headings, view, comment: enableComment, ...props } = Astro.props
+const { title, headings, view, comment, ...props } = Astro.props
+
+const walineEnabled = config.integ.waline.enable
+const enableComment = Boolean(comment) && walineEnabled
+const enableView = Boolean(view) && walineEnabled
 ---
 
 <PageLayout meta={{ title }} {...props}>
@@ -20,7 +25,7 @@ const { title, headings, view, comment: enableComment, ...props } = Astro.props
 
   <Fragment slot='header'>
     <h1 class='text-2xl font-medium sm:mb-2 sm:text-3xl'>{title}</h1>
-    {(view || enableComment) && <PageInfo {view} comment={enableComment} class='italic' />}
+    {(enableView || enableComment) && <PageInfo view={enableView} comment={enableComment} class='italic' />}
   </Fragment>
 
   <slot />

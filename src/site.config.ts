@@ -48,9 +48,9 @@ export const theme: ThemeUserConfig = {
   /** Configure the header of your site. */
   header: {
     menu: [
-      { title: '文章', link: '/blog' },
-      { title: '作品', link: '/projects' },
-      { title: '關於', link: '/about' }
+      { title: 'Blog', link: '/blog' },
+      { title: 'Projects', link: '/projects' },
+      { title: 'About', link: '/about' }
     ]
   },
 
@@ -94,8 +94,14 @@ export const theme: ThemeUserConfig = {
 // Waline production setup:
 // 1) Set PUBLIC_WALINE_SERVER in your deployment environment.
 // 2) Optional: set PUBLIC_WALINE_ENABLE=false to force-disable.
-const walineServer = (import.meta.env.PUBLIC_WALINE_SERVER || '').trim()
-const walineEnable = walineServer.length > 0 && import.meta.env.PUBLIC_WALINE_ENABLE !== 'false'
+const rawWalineServer = (
+  process.env.PUBLIC_WALINE_SERVER ??
+  import.meta.env.PUBLIC_WALINE_SERVER ??
+  ''
+).trim()
+const walineEnableFlag = process.env.PUBLIC_WALINE_ENABLE ?? import.meta.env.PUBLIC_WALINE_ENABLE
+const walineServer = rawWalineServer || 'https://kashionz-archlive-waline.vercel.app/'
+const walineEnable = walineServer.length > 0 && walineEnableFlag !== 'false'
 
 export const integ: IntegrationUserConfig = {
   // [Links]

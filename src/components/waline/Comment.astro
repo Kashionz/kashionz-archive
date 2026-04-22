@@ -52,7 +52,9 @@ const { class: className } = Astro.props
     }
   }
 
-  if (walineConfig.enable) customElements.define('comment-component', Comment)
+  if (walineConfig.enable && !customElements.get('comment-component')) {
+    customElements.define('comment-component', Comment)
+  }
 </script>
 
 {
@@ -101,7 +103,7 @@ const { class: className } = Astro.props
   }
 
   /* Fix long text and links overflow */
-  #waline :global(.wl-content, .wl-text, .wl-comment-text, .wl-item, .wl-card-item, a) {
+  #waline :global(.wl-content, .wl-text, .wl-comment-text, .wl-item, .wl-card-item) {
     max-width: 100%;
   }
   #waline :global(.wl-meta, .wl-content, .wl-text, .wl-comment-text) {
@@ -109,10 +111,6 @@ const { class: className } = Astro.props
     word-break: break-word;
     overflow-wrap: anywhere;
   }
-  #waline :global(a) {
-    display: inline-block;
-  }
-
   /* Reaction buttons */
   #waline :global(.wl-reaction-title, .wl-reaction-text) {
     display: none;
