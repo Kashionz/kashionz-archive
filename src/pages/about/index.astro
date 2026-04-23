@@ -3,6 +3,7 @@ import { Button, Collapse, Spoiler, Timeline } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
 import Substats from '@/components/about/Substats.astro'
 import ToolSection from '@/components/about/ToolSection.astro'
+
 import { homeSkillGroups } from '../../data/skills'
 
 const headings = [
@@ -38,7 +39,7 @@ const skillIcons = {
   ubuntu: import('@/assets/tools/ubuntu.svg?raw'),
   apple: import('@/assets/tools/apple.svg?raw'),
   vscode: import('@/assets/tools/vscode.svg?raw'),
-  photoshop: import('@/assets/tools/photoshop.svg?raw'),
+  photoshop: import('@/assets/tools/photoshop.svg?raw')
 }
 
 type SkillMeta = {
@@ -189,8 +190,7 @@ function skillToTool(skill: string): ToolItem {
 function uniqueByName<T extends { name: string }>(items: T[]): T[] {
   const seen = new Set<string>()
   return items.filter((item) => {
-    if (seen.has(item.name))
-      return false
+    if (seen.has(item.name)) return false
     seen.add(item.name)
     return true
   })
@@ -211,7 +211,9 @@ const filteredAboutSkillSections = aboutSkillSections.filter(
 )
 
 const movedDesignTools = uniqueByName(
-  (skillGroupsMap.Design ?? []).map((skill) => skillToTool(skill)).filter((tool) => tool.name !== 'Photoshop')
+  (skillGroupsMap.Design ?? [])
+    .map((skill) => skillToTool(skill))
+    .filter((tool) => tool.name !== 'Photoshop')
 )
 
 const developmentTools = uniqueByName([
@@ -255,11 +257,7 @@ const environmentTools = uniqueByName([
 
   {/* tools */}
   <h2 id='tools'>Tools</h2>
-  <ToolSection
-    class='mb-5'
-    title='Development'
-    tools={developmentTools}
-  />
+  <ToolSection class='mb-5' title='Development' tools={developmentTools} />
   <ToolSection
     class='mb-5'
     title='Productivity'
@@ -297,17 +295,11 @@ const environmentTools = uniqueByName([
       ...movedDesignTools
     ]}
   />
-  <ToolSection
-    class='mb-5'
-    title='Environment'
-    tools={environmentTools}
-  />
+  <ToolSection class='mb-5' title='Environment' tools={environmentTools} />
 
   {/* social-networks */}
   <h2 id='social-networks'>Social Networks</h2>
-  <p>
-    這些地方可以找到我。
-  </p>
+  <p>這些地方可以找到我。</p>
   <Substats
     stats={[
       {
@@ -337,13 +329,15 @@ const environmentTools = uniqueByName([
   {/* quotes */}
   <h2 id='quotes'>Quotes</h2>
   <Collapse title='Kiyotaka Ayanokōji'>
-    People are all born liars and are mostly used to lying.
-    If a person that has never lied even once in their lives exists, that existence itself would be a lie. For humans, lies are an inseparable part of ourselves.
+    People are all born liars and are mostly used to lying. If a person that has never lied even
+    once in their lives exists, that existence itself would be a lie. For humans, lies are an
+    inseparable part of ourselves.
   </Collapse>
 
   {/* about-blog */}
   <h2 id='about-blog'>About Blog</h2>
-  {/*
+  {
+    /*
   <p>Website history:</p>
   <Timeline
     events={[
@@ -363,10 +357,9 @@ const environmentTools = uniqueByName([
       }
     ]}
   />
-  */}
-  <p>
-    網站的流暢運作與個人客製化，也仰賴以下優秀的專案／服務提供者所提供的資源與技術支援：
-  </p>
+  */
+  }
+  <p>網站的流暢運作與個人客製化，也仰賴以下優秀的專案／服務提供者所提供的資源與技術支援：</p>
   <ul>
     <li>Domain: <a href='https://www.cloudflare.com/' target='_blank'>Cloudflare</a></li>
     <li>
